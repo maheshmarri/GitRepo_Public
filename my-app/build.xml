@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project name="project1" default="all" basedir=".">
+    
+<description>
+   
+  </description>
+<property name="source.dir" value="C:\\work\\gitworkspace\\my-app\src\\main"/>
+<property name="target.dir" value="C:\\work\\gitworkspace\\my-app\target"/>
+
+<tstamp>
+    <format property="timestamp" pattern="MM/dd/yyyy hh:mm"/>
+</tstamp>
+<target name="clean">
+    <echo>...Cleaning all build directories </echo>
+    <delete dir="${target.dir}"/>
+    <mkdir dir="${target.dir}"/>   
+</target>
+<target name="compile" depends="clean">
+    <echo>...Compile Source </echo>
+    
+    <javac srcdir="${source.dir}"   
+           target="1.6"
+           memoryinitialsize="384m"
+           memorymaximumsize="384m"
+           debug="true"
+           encoding="UTF-8"
+           destdir="${target.dir}"/>
+    <echo>...Finished compile shared </echo>
+</target>
+<target name="jar" depends="compile">
+    <echo>...Create jar file   </echo>
+    <jar destfile="${target.dir}/sample.jar"   
+           basedir="${target.dir}"
+           includes="**/*"> 
+         <manifest>
+            <attribute name="Build-Number" value="${build.number}"/>
+            <attribute name="Creation-Date" value="${timestamp}"/>
+         </manifest>
+      </jar>
+    <echo>...Finished create jar file for basesupport </echo>
+  </target>
+
+<target name="all" depends="clean,compile,jar">
+   <echo>...all projects done </echo>
+</target>
+
+
+</project>  <!-- this tag is always last in the file -->
